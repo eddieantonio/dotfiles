@@ -1,0 +1,22 @@
+# The recommendation is to set:
+#
+#   [status]
+#   showUntrackedFiles = no
+#
+# in this repository's local git config, which makes a .gitignore
+# a bit moot. Regardless, this file is here to prevent an accidental
+# `git add -A` from committing things it most certainly should not.
+
+# Sensitive data
+/.ssh/
+
+# macOS stuff:
+/Applications/
+/Desktop/
+/Documents/
+/Downloads/
+/Library/
+/Movies/
+/Music/
+/Pictures/
+/Public/
