@@ -1,0 +1,17 @@
+# rc prompt theme
+#
+# Inspired by @thingskatedid [1]
+# ...who was inspired by rc(1) [2]
+# ...which might have been Tom Duff's fault, but he doesn't remember [3]
+#
+# [1]: https://twitter.com/thingskatedid/status/1443756144950800398
+# [2]: https://en.wikipedia.org/wiki/Rc
+# [3]: https://twitter.com/TomDuff/status/1443766052320464899
+
+prompt_rc_setup() {
+    PS1='%(?.;.%F{red};%f) '
+    unset RPS1 RPS2 RPROMPT RPROMPT2
+    # That's it
+}
+
+# vim: set ft=zsh:
