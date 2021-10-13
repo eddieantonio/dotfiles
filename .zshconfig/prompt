@@ -1,0 +1,70 @@
+# Setup my ZSH prompt
+# Intended for macOS + iTerm2 with shell integration
+
+# See: https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
+prompt_eddieantonio_lprompt() {
+    local pchar="❯"
+
+    local directory_colour=32
+    local success_colour=74
+    local error_color=124
+
+    # ~
+    print -n '%F{'$directory_colour'}%1~%f'
+
+    # 127
+    print -n '%(?.%F{'$success_colour'}'
+    print -n '. %F{'$error_color'}%?)'
+
+    print -n "$pchar"
+
+    print -n '%f '
+}
+
+prompt_eddieantonio_rprompt() {
+    print -n "%{%2v%}"
+    print -n '%1v'
+    print -n '%f%k'
+}
+
+prompt_eddieantonio_dynamic_rprompt() {
+    print -n '%{'
+    ~/Programming/git-status-color/git-status-color
+    print -n '%}'
+    print -n '%1v'
+    print -n '%f%k'
+}
+
+prompt_eddieantonio_precmd() {
+    if [ "`git rev-parse --is-inside-work-tree 2>/dev/null`" = "true" ]; then
+        psvar=(
+            "$(git rev-parse --abbrev-ref HEAD)"
+        )
+    else
+        psvar=()
+    fi
+
+    RPROMPT="$(prompt_eddieantonio_dynamic_rprompt)"
+}
+
+prompt_eddieantonio_setup() {
+    prompt_opts=(percent)
+    zmodload zsh/zle
+
+    add-zsh-hook precmd prompt_eddieantonio_precmd
+
+    PROMPT="$(prompt_eddieantonio_lprompt)"
+    RPROMPT="$(prompt_eddieantonio_rprompt)"
+}
+
+# TODO: this is a mess!
+# Clean up the prompt stuff.
+# Here are some useful links:
+#  - https://unix.stackexchange.com/questions/454253/process-prompt-directives-inside-psvar-without-prompt-subst
+#  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
+#  - https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
+#  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/git-info-psvar
+#  - https://iterm2.com/documentation-touch-bar.html
+prompt_eddieantonio_setup
+
+# vim: set ft=zsh:
