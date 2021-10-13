@@ -1,16 +1,19 @@
 # My aliases
 
+# Display info about a shell or environment variable
+alias p='typeset -p'
+
 # forget(1) -- send items to purgatory
 #
 #  forget FILE ...
 #  forget
 if [[ "$(uname)" = Darwin ]]; then
     function forget() {
-        if [ $# -eq 0 ] ; then 
+        if [ $# -eq 0 ] ; then
             open /tmp/
             exit
-        fi 
-        
+        fi
+
         mv "$@" /tmp/
     }
 fi
@@ -35,5 +38,7 @@ alias gc='git commit'
 alias gl='git pull'
 alias gp='git push'
 alias gd='git diff'
+alias gcamend='git commit --amend --no-edit'
+alias gb='git branch'
 
 # vim: set ft=zsh:
