@@ -1,0 +1,39 @@
+# My aliases
+
+# forget(1) -- send items to purgatory
+#
+#  forget FILE ...
+#  forget
+if [[ "$(uname)" = Darwin ]]; then
+    function forget() {
+        if [ $# -eq 0 ] ; then 
+            open /tmp/
+            exit
+        fi 
+        
+        mv "$@" /tmp/
+    }
+fi
+
+# "Safe" aliases
+alias mv='mv -i'
+alias rm='rm -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+# ls the way I like it
+# Note: macOS only for now
+alias ls='ls -G'
+alias ll='ls -l'
+alias la='ls -la'
+
+# my favourite git aliases
+alias gca='git commit -a'
+alias gss='git status --short'
+alias ga='git add'
+alias gc='git commit'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+
+# vim: set ft=zsh:
