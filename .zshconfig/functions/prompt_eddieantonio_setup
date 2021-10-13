@@ -51,6 +51,7 @@ prompt_eddieantonio_setup() {
     prompt_opts=(percent)
     zmodload zsh/zle
 
+    autoload -Uz add-zsh-hook
     add-zsh-hook precmd prompt_eddieantonio_precmd
 
     PROMPT="$(prompt_eddieantonio_lprompt)"

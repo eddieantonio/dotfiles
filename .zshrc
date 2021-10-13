@@ -26,6 +26,11 @@ alias dotfiles='git --git-dir=/$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Load my configuration
 ZSHCONFIGDIR="$HOME/.zshconfig"
-source "$ZSHCONFIGDIR/init"
-source "$ZSHCONFIGDIR/prompt"
+fpath+=( "$ZSHCONFIGDIR/functions" )
+
+source "$ZSHCONFIGDIR/init.zsh"
 source "$HOME/.aliases"
+
+# Select my preferred prompt using the zsh-users prompt system
+autoload -Uz promptinit && promptinit
+prompt eddieantonio
