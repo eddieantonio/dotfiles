@@ -1,71 +1,116 @@
-# Setup my ZSH prompt
+# eddieantonio zsh prompt theme
+#
 # Intended for macOS + iTerm2 with shell integration
 
-# See: https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
-prompt_eddieantonio_lprompt() {
-    local pchar="❯"
+# Wishlist:
+#  - temporarily disable RPROMPT (to facilitate copy-pasting)
 
-    local directory_colour=32
-    local success_colour=74
-    local error_color=124
-
-    # ~
-    print -n '%F{'$directory_colour'}%1~%f'
-
-    # 127
-    print -n '%(?.%F{'$success_colour'}'
-    print -n '. %F{'$error_color'}%?)'
-
-    print -n "$pchar"
-
-    print -n '%f '
-}
-
-prompt_eddieantonio_rprompt() {
-    print -n "%{%2v%}"
-    print -n '%1v'
-    print -n '%f%k'
-}
-
-prompt_eddieantonio_dynamic_rprompt() {
-    print -n '%{'
-    ~/Programming/git-status-color/git-status-color
-    print -n '%}'
-    print -n '%1v'
-    print -n '%f%k'
-}
-
-prompt_eddieantonio_precmd() {
-    if [ "`git rev-parse --is-inside-work-tree 2>/dev/null`" = "true" ]; then
-        psvar=(
-            "$(git rev-parse --abbrev-ref HEAD)"
-        )
-    else
-        psvar=()
-    fi
-
-    RPROMPT="$(prompt_eddieantonio_dynamic_rprompt)"
-}
-
-prompt_eddieantonio_setup() {
-    prompt_opts=(percent)
-    zmodload zsh/zle
-
-    autoload -Uz add-zsh-hook
-    add-zsh-hook precmd prompt_eddieantonio_precmd
-
-    PROMPT="$(prompt_eddieantonio_lprompt)"
-    RPROMPT="$(prompt_eddieantonio_rprompt)"
-}
-
-# TODO: this is a mess!
-# Clean up the prompt stuff.
 # Here are some useful links:
 #  - https://unix.stackexchange.com/questions/454253/process-prompt-directives-inside-psvar-without-prompt-subst
 #  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
 #  - https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
 #  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/git-info-psvar
 #  - https://iterm2.com/documentation-touch-bar.html
-prompt_eddieantonio_setup
 
+prompt_eddieantonio_setup () {
+    autoload -Uz add-zsh-hook
+    autoload -Uz git-info-psvar
+
+    PROMPT="$(prompt_eddieantonio_lprompt)"
+    RPROMPT="$(prompt_eddieantonio_rprompt)"
+
+    prompt_opts=(cr percent sp)
+    add-zsh-hook precmd prompt_eddieantonio_precmd
+}
+
+prompt_eddieantonio_preview () {
+    print "eddieantonio theme:"
+    print -Pn "$(prompt_eddieantonio_lprompt) command arg1 arg2 ... argn"
+    print -n '\t'
+    psvar=(main 2 '' 1 '' 1 1 1 1)
+    print -P "$(prompt_eddieantonio_rprompt)"
+}
+
+# See: https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
+prompt_eddieantonio_lprompt() {
+    local directory_color=32
+    local success_color=74
+    local error_color=124
+
+    # user@host | Show username@host if logged-in through SSH
+    [[ -n $SSH_CONNECTION ]] && print -n '%F{green}%n@%m%f '
+
+    # ~         | current working dir, with ~ substitution
+    print -n '%F{'$directory_color'}%1~%f'
+
+    # ⚙        | Add a symbol when there's at least one background job.
+    print -n '%(1j.%B⚙%b.)'
+
+    # 127       | sets the background colour depending on previous return
+    #           | code. Displays the return code if non-zero.
+    print -n '%(?.%F{'$success_color'}'
+    print -n '. %F{'$error_color'}%?)'
+
+    # ❯❯        | outputs extra prompts, if in subshells (up to 3 levels).
+    print -n "%(2L.$pchar.)%(3L.$pchar.)"
+
+    # ❯         | the final prompt character.
+    print -n "❯"
+
+    #           | clear the background colour; add a space
+    print -n '%f '
+}
+
+# Prints the format of the right prompt.
+# Use print -P "$(prompt_eddieantonio_rprompt)" to preview.
+prompt_eddieantonio_rprompt() {
+    # Uses git-info-psvar which in turn sets psvar appropriately
+
+    # added     ● (green)
+    # removed   ● (red)
+    # unstaged  ● (yellow)
+    # untracked ◌ (white)
+    # renamed   ↯ (green)
+    # stashed   ⚑ (white)
+
+    # 13:59     | The time, in a very faint colour.
+    print -n '%F{242}%T%f'
+
+    # Display the git prompt ONLY when the precmd has populated psvar with
+    # repository status.
+    print -n '%(1v.'
+    print -n ' '
+
+    #           | Changes branch name colour on merge conflict.
+    print -n '%(3V.%F{200}.)'
+
+    # master    | the branch name
+    print -n '%1v%f'
+
+    # ●         | red ● if deletions
+    print -n '%(8V. %F{red}●%f.)'
+    # ●         | yellow ● if modifications
+    print -n '%(6V. %F{yellow}●%f.)'
+    # ●         | green ● if additions
+    print -n '%(7V. %F{green}●%f.)'
+    # ↯         | green ↯ if renamed
+    print -n '%(9V. %F{green}↯%f.)'
+    # ◌         | plain ◌ if untracked
+    print -n '%(4V. ◌%f.)'
+    # 1⚑        | plain n⚑ if stashed (n = how many stashed changes)
+    print -n '%(2V. %2v⚑%f.)'
+
+    print -n '.)'
+}
+
+prompt_eddieantonio_precmd() {
+    git-info-psvar
+
+    # Hacky. Is there a better way?
+    if [ -x ~/.iterm2/it2setkeylabel ] ; then
+        ~/.iterm2/it2setkeylabel set status "${psvar[1]}"
+    fi
+}
+
+prompt_eddieantonio_setup "$@"
 # vim: set ft=zsh:
