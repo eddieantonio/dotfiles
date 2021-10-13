@@ -8,10 +8,9 @@
 # [2]: https://en.wikipedia.org/wiki/Rc
 # [3]: https://twitter.com/TomDuff/status/1443766052320464899
 
-prompt_rc_setup() {
-    PS1='%(?.;.%F{red};%f) '
-    unset RPS1 RPS2 RPROMPT RPROMPT2
-    # That's it
-}
+PS1='%(?.;.%F{red};%f) '
+unset RPS1 RPS2 RPROMPT RPROMPT2
+prompt_opts=( cr percent sp )
+# That's it -- no prompt_rc_default needed!
 
 # vim: set ft=zsh:
