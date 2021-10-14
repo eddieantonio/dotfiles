@@ -21,7 +21,17 @@
 #
 # Derived from git-info by Sorin Ionescu in Prezto.
 # https://github.com/sorin-ionescu/prezto/blob/d43bcb972091878efa3692100e8479fb887332f5/modules/git/functions/git-info
-
+#
+# Here's what's in psvar:
+# %1v psvar[1]= the branch name, like "main" or "production"
+# %2v psvar[2]= the ref, like "7c9168c853a9857a82c1913ca45694c3c723aa29"
+# %3v psvar[3]= the number of unmerged files (UU)
+# %4v psvar[4]= the number of untracked files (??)
+# %5v psvar[5]= the number of files modified, but not added to the index
+# %6v psvar[6]= the number of files added to the index
+# %7v psvar[7]= the number of files deleted from the working tree
+# %8v psvar[8]= the number of files that have been renamed
+# %9v psvar[9]= the number of stash entries
 function git-info-psvar {
   # Extended globbing is needed to parse repository status.
   setopt LOCAL_OPTIONS
@@ -29,20 +39,19 @@ function git-info-psvar {
   setopt WARN_CREATE_GLOBAL
 
   local branch_idx=1
-  local stashed_idx=2
+  local ref_idx=2
   local unmerged_idx=3
   local untracked_idx=4
-  # unstaged index is never used.
-  local modified_idx=6
-  local added_idx=7
-  local deleted_idx=8
-  local renamed_idx=9
+  local modified_idx=5
+  local added_idx=6
+  local deleted_idx=7
+  local renamed_idx=8
+  local stashed_idx=9
 
   local branch
   local -i stashed=0
   local -i untracked=0
   local -i unmerged=0
-  local -i unstaged=0
   local -i modified=0
   local -i added=0
   local -i deleted=0

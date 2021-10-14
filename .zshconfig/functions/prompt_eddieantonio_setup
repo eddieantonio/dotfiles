@@ -5,12 +5,31 @@
 # Wishlist:
 #  - temporarily disable RPROMPT (to facilitate copy-pasting)
 
+# Relevant documentation/reference:
+#
+# ZSH prompt expansion:
+# http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+#
+# ANSI escape codes:
+# http://ascii-table.com/ansi-escape-sequences.php
+
+# An assortment of colors
+#
+#  see: https://jonasjacek.github.io/colors/
+#
+#   74 - SteelBlue
+#  116 - DarkSlateGrey
+#  120 - LightGreen
+#  124 - Red3
+#  200 - Magenta2
+#  221 - LightGoldenrod2
+
 # Here are some useful links:
-#  - https://unix.stackexchange.com/questions/454253/process-prompt-directives-inside-psvar-without-prompt-subst
 #  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/prompt_eddieantonio_setup
 #  - https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
-#  - https://github.com/eddieantonio/prezto/blob/master/modules/prompt/functions/git-info-psvar
 #  - https://iterm2.com/documentation-touch-bar.html
+#  - https://github.com/zsh-users/zsh/blob/master/Functions/Prompts/promptinit
+#  - https://github.com/zsh-users/zsh/tree/master/Functions/Prompts
 
 prompt_eddieantonio_setup () {
     autoload -Uz add-zsh-hook
@@ -27,7 +46,8 @@ prompt_eddieantonio_preview () {
     print "eddieantonio theme:"
     print -Pn "$(prompt_eddieantonio_lprompt) command arg1 arg2 ... argn"
     print -n '\t'
-    psvar=(main 2 '' 1 '' 1 1 1 1)
+    # Emulate git-info-psvar
+    psvar=(main 7c9168c2 '' 1 1 1 1 1 2)
     print -P "$(prompt_eddieantonio_rprompt)"
 }
 
@@ -88,17 +108,17 @@ prompt_eddieantonio_rprompt() {
     print -n '%1v%f'
 
     # ●         | red ● if deletions
-    print -n '%(8V. %F{red}●%f.)'
+    print -n '%(7V. %F{red}●%f.)'
     # ●         | yellow ● if modifications
-    print -n '%(6V. %F{yellow}●%f.)'
+    print -n '%(5V. %F{yellow}●%f.)'
     # ●         | green ● if additions
-    print -n '%(7V. %F{green}●%f.)'
+    print -n '%(6V. %F{green}●%f.)'
     # ↯         | green ↯ if renamed
-    print -n '%(9V. %F{green}↯%f.)'
+    print -n '%(8V. %F{green}↯%f.)'
     # ◌         | plain ◌ if untracked
-    print -n '%(4V. ◌%f.)'
+    print -n '%(4V. ◌.)'
     # 1⚑        | plain n⚑ if stashed (n = how many stashed changes)
-    print -n '%(2V. %2v⚑%f.)'
+    print -n '%(9V. %9v⚑.)'
 
     print -n '.)'
 }
