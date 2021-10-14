@@ -124,11 +124,20 @@ prompt_eddieantonio_rprompt() {
 }
 
 prompt_eddieantonio_precmd() {
+    local output
+
     git-info-psvar
 
     # Hacky. Is there a better way?
     if [ -x ~/.iterm2/it2setkeylabel ] ; then
-        ~/.iterm2/it2setkeylabel set status "${psvar[1]}"
+
+        if [[ -n "$psvar[1]" ]] ; then
+            output="${psvar[1]}@${psvar[2]:0:6}"
+        else
+            output=''
+        fi
+
+        ~/.iterm2/it2setkeylabel set status "$output"
     fi
 }
 

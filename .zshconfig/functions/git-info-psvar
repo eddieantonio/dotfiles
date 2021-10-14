@@ -69,6 +69,8 @@ function git-info-psvar {
   fi
 
   psvar[$branch_idx]="$branch"
+  psvar[$ref_idx]="$(git rev-parse HEAD)"
+
 
   # TODO: support disabling on big repos.
 
