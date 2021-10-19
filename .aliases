@@ -11,10 +11,9 @@ if [[ "$(uname)" = Darwin ]]; then
     function forget() {
         if [ $# -eq 0 ] ; then
             open /tmp/
-            exit
+        else
+            mv "$@" /tmp/
         fi
-
-        mv "$@" /tmp/
     }
 fi
 
@@ -38,6 +37,7 @@ alias gc='git commit'
 alias gl='git pull'
 alias gp='git push'
 alias gd='git diff'
+alias gwc='git whatchanged'
 alias gcamend='git commit --amend --no-edit'
 alias gb='git branch'
 
