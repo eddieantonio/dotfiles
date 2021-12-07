@@ -23,6 +23,9 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias ln='ln -i'
 
+# "Convenient" aliases
+alias mkdir='mkdir -p'
+
 # ls the way I like it
 # Note: macOS only for now
 alias ls='ls -G'
@@ -32,6 +35,7 @@ alias la='ls -la'
 # my favourite git aliases
 alias gca='git commit -a'
 alias gss='git status --short'
+alias gsw='git switch'
 alias ga='git add'
 alias gc='git commit'
 alias gl='git pull'

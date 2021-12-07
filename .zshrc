@@ -27,10 +27,41 @@ alias dotfiles='git --git-dir=/$HOME/.dotfiles/ --work-tree=$HOME'
 # Load my configuration
 ZSHCONFIGDIR="$HOME/.zshconfig"
 fpath+=( "$ZSHCONFIGDIR/functions" )
+fpath+=( "$HOME/.zfunc" )
 
 source "$ZSHCONFIGDIR/init.zsh"
 source "$HOME/.aliases"
 
+# Scroll with trackpad in less:
+export LESS=-r
+
+export EDITOR=vim
+export VISUAL=vim
+# Zsh "helpfully" set vi mode if the EDITOR is vim. But I have muscle memory
+# for emacs keybinings so: 
+# See: https://unix.stackexchange.com/a/197841
+bindkey -e
+
 # Select my preferred prompt using the zsh-users prompt system
 autoload -Uz promptinit && promptinit
+# Other neat options:
+#  - rc -- clever minimalistic prompt; good for copy-pasting
+#  - default - zsh default
+#  - restore - macOS default
 prompt eddieantonio
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Completion -- see: https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' max-errors 2
+zstyle :compinstall filename '/Users/eddie/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
