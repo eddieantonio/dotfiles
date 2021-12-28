@@ -62,6 +62,14 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r
 zstyle ':completion:*' max-errors 2
 zstyle :compinstall filename '/Users/eddie/.zshrc'
 
+# History
+# Cross-reference with /private/etc/zshrc
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+HISTSIZE=20000
+SAVEHIST=10000
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
