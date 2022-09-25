@@ -13,7 +13,11 @@ path+=( "$HOME/.local/bin" )
 # Lazy-load conda
 # (note: there might be a conflict with pyenv... once both are loaded.... maybe)
 export CONDA_AUTO_ACTIVATE_BASE=False
-command -v conda &>/dev/null && source "$HOME/.zshconfig/functions/load_conda.zsh" || true
+command -v conda &>/dev/null && source "$HOME/.zshconfig/lazy_load_conda.zsh" || true
 
 # Enable pyenv -- note, must come AFTER sourcing brew
 command -v pyenv &>/dev/null && path=( "$(pyenv root)/shims" "${path[@]}" ) || true
+
+# Enable frum -- note, must come AFTER source brew
+# Ruby version manager. **NOT** RVM!
+command -v frum &>/dev/null && eval "$(frum init)" || true

@@ -45,4 +45,27 @@ alias gwc='git whatchanged'
 alias gcamend='git commit --amend --no-edit'
 alias gb='git branch'
 
+# Renders a graphviz in the terminal
+#
+# Requires:
+#  - convert
+#  - iTerm2's imgcat
+#
+# Adapted from https://twitter.com/thingskatedid/status/1483847024894099458
+idot() {
+      dot -Tpng \
+          -Gdpi=125 \
+          -Efontsize=18 \
+          -Efontname=sans \
+          -Nfontname=sans \
+          -Gbgcolor=black \
+          -Gcolor=white \
+          -Ecolor=white \
+          -Efontcolor=white \
+          -Ncolor=white \
+          -Nfontcolor=white \
+      | convert -trim -bordercolor black -border 20 -transparent black - - \
+      | imgcat
+}
+
 # vim: set ft=zsh:
