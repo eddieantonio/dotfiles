@@ -57,16 +57,16 @@ prompt_eddieantonio_lprompt() {
     local success_color=74
     local error_color=124
 
+    # ⚙        | Add a symbol when there's at least one background job.
+    print -n '%(1j.%B⚙%b .)'
+
     # user@host | Show username@host if logged-in through SSH
     [[ -n $SSH_CONNECTION ]] && print -n '%F{green}%n@%m%f '
 
     # ~         | current working dir, with ~ substitution
     print -n '%F{'$directory_color'}%1~%f'
 
-    # ⚙        | Add a symbol when there's at least one background job.
-    print -n '%(1j.%B⚙%b.)'
-
-    # 127       | sets the background colour depending on previous return
+    # 127       | sets the foreground colour depending on previous return
     #           | code. Displays the return code if non-zero.
     print -n '%(?.%F{'$success_color'}'
     print -n '. %F{'$error_color'}%?)'
@@ -77,7 +77,7 @@ prompt_eddieantonio_lprompt() {
     # ❯         | the final prompt character.
     print -n "❯"
 
-    #           | clear the background colour; add a space
+    #           | reset the foreground colour; add a space
     print -n '%f '
 }
 
