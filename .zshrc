@@ -111,3 +111,5 @@ idot() {
 # TODO: clean this
 # Ruby:
 [ -f /opt/homebrew/bin/frum ] && eval "$(frum init)" || true
+
+zprof
