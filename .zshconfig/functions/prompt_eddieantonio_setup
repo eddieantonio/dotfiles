@@ -38,6 +38,13 @@ prompt_eddieantonio_setup () {
     PROMPT="$(prompt_eddieantonio_lprompt)"
     RPROMPT="$(prompt_eddieantonio_rprompt)"
 
+    # Setup "git status in TouchBar" support (only in iTerm2)
+    if [ -n "$ITERM_PROFILE" -a -x ~/.iterm2/it2setkeylabel ] ; then
+        prompt_eddieantonio_touchbar_git_status=1
+    else
+        prompt_eddieantonio_touchbar_git_status=0
+    fi
+
     prompt_opts=(cr percent sp)
     add-zsh-hook precmd prompt_eddieantonio_precmd
 }
@@ -124,20 +131,19 @@ prompt_eddieantonio_rprompt() {
 }
 
 prompt_eddieantonio_precmd() {
-    local output
+    local touchbar_status
 
     git-info-psvar
 
-    # Hacky. Is there a better way?
-    if [ -x ~/.iterm2/it2setkeylabel ] ; then
-
+    # Set TouchBar with git status, collected from git-info-psvar:
+    if (( prompt_eddieantonio_touchbar_git_status )) ; then
         if [[ -n "$psvar[1]" ]] ; then
-            output="${psvar[1]}@${psvar[2]:0:6}"
+            # Show git branch and commit SHA in the touchbar:
+            touchbar_status="${psvar[1]}@${psvar[2]:0:6}"
         else
-            output=''
+            touchbar_status=''
         fi
-
-        ~/.iterm2/it2setkeylabel set status "$output"
+        ~/.iterm2/it2setkeylabel set status "$touchbar_status"
     fi
 }
 
