@@ -1,4 +1,3 @@
-zmodload zsh/zprof
 ######################### Login shell configuration ##########################
 # Things that should be loaded once every login shell is opened.
 # On macOS with Terminal.app and iTerm2, this is effectively whenever a new
@@ -11,13 +10,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Enable my personal commands
 path+=( "$HOME/.local/bin" )
 
-# Enable conda -- note, place BEFORE pyenv (because conda wants to be first,
-# but I want pyenv to be first).
+# Lazy-load conda
+# (note: there might be a conflict with pyenv... once both are loaded.... maybe)
 export CONDA_AUTO_ACTIVATE_BASE=False
-command -v conda &>/dev/null && source $HOME ~/.zshconfig/functions/load_conda.zsh || true
+command -v conda &>/dev/null && source "$HOME/.zshconfig/functions/load_conda.zsh" || true
 
 # Enable pyenv -- note, must come AFTER sourcing brew
-function load_pyenv() {
 command -v pyenv &>/dev/null && path=( "$(pyenv root)/shims" "${path[@]}" ) || true
-}
-load_pyenv
