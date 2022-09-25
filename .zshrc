@@ -58,7 +58,6 @@ setopt CORRECT
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=20000
 SAVEHIST=10000
-setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 
 # Completion -- see: https://zsh.sourceforge.io/Doc/Release/Completion-System.html
