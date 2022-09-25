@@ -12,6 +12,7 @@
 
 # Sensitive data
 /.ssh/
+/.gnupg/
 
 # macOS stuff:
 /Applications/
@@ -23,3 +24,75 @@
 /Music/
 /Pictures/
 /Public/
+/.Trash/
+
+# Personal directories
+/Programming/
+/.local/
+
+# vim dotfiles are managed separately
+# https://github.com/eddieantonio/vim-castle
+/.vim
+/.vimrc
+
+# Directories created by other apps and utiltiies
+/Zotero/
+# Created by Anaconda:
+/opt/
+/.iterm2/
+
+# Machine-specific state (history and completions)
+# z's database file:
+/.z
+# zsh stuff:
+/.zcompdump
+/.lesshst
+# Erlang
+/.dialyzer_plt
+/.erlang.cookie
+/.yarnrc
+
+############################### History files ################################
+/.sqlite_history
+/.zsh_history
+/.node_repl_history
+/.python_history
+/.bash_history
+/.viminfo
+
+################################### Caches ###################################
+/.cache/
+
+# Anaconda
+/.anaconda/
+/.conda/
+
+# Dart
+/.dart/
+/.pub-cache/
+
+# Java and JVM
+/.gradle/
+/.m2/
+
+# Ruby
+/.bundle/
+/.frum/
+/.gem/
+/.rvm/
+
+# Rust
+/.cargo/
+/.rustup/
+
+# These should be self explanatory, I hope:
+/.docker/
+/.ghc/
+/.luarocks/
+/.npm/
+/.pyenv/
+/.swiftpm/
+/.tldrc/
+/.visidata/
+/.vscode/
+/.wine/
