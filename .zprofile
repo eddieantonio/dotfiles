@@ -17,4 +17,3 @@ command -v conda &>/dev/null && eval "$(conda shell.zsh hook)" || true
 
 # Enable pyenv -- note, must come AFTER sourcing brew
 command -v pyenv &>/dev/null && path=( "$(pyenv root)/shims" "${path[@]}" ) || true
-

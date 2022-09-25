@@ -50,9 +50,6 @@ autoload -Uz promptinit && promptinit
 #  - restore - macOS default
 prompt eddieantonio
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 # Completion -- see: https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored _correct _approximate
