@@ -58,6 +58,10 @@ zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character t
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' max-errors 2
 zstyle :compinstall filename '/Users/eddie/.zshrc'
+# End of lines added by compinstall
+
+# Correct typos when I write a command.
+setopt CORRECT
 
 # History
 # Cross-reference with /private/etc/zshrc
@@ -69,7 +73,6 @@ setopt SHARE_HISTORY
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
 
 ############################# Unorganized lines ##############################
