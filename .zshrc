@@ -42,6 +42,17 @@ export VISUAL=vim
 # See: https://unix.stackexchange.com/a/197841
 bindkey -e
 
+# Configure what zle consisders a "word".
+#
+# Affects Ctrl+W, Esc+F, Esc+B, etc.
+# (a.k.a., backward-kill-word, forward-word, backward-word)
+#
+# I want Ctrl+W to delete path segments rather delete an entire path.
+#
+# See https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#ZLE-Functions
+autoload -U select-word-style
+select-word-style bash
+
 # Select my preferred prompt using the zsh-users prompt system
 autoload -Uz promptinit && promptinit
 # Other neat options:
