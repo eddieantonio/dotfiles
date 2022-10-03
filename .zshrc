@@ -29,9 +29,6 @@ ZSHCONFIGDIR="$HOME/.zshconfig"
 fpath+=( "$ZSHCONFIGDIR/functions" )
 fpath+=( "$HOME/.zfunc" )
 
-source "$ZSHCONFIGDIR/init.zsh"
-source "$HOME/.aliases"
-
 # Scroll with trackpad in less:
 export LESS=-r
 
@@ -41,6 +38,9 @@ export VISUAL=vim
 # for emacs keybinings so:
 # See: https://unix.stackexchange.com/a/197841
 bindkey -e
+
+source "$ZSHCONFIGDIR/init.zsh"
+source "$HOME/.aliases"
 
 # Configure what zle consisders a "word".
 #
