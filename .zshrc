@@ -1,5 +1,7 @@
 ###################### Interactive shell configuration #######################
-# Run for any interactive usage of zsh
+# Run for any interactive usage of zsh                                       #
+#                                                                            #
+# See $ZSHHOME                                                               #
 ##############################################################################
 
 # Manage my dotfiles using the "StreakyCobra" method:
@@ -30,7 +32,7 @@ fpath+=( "$ZSHCONFIGDIR/functions" )
 fpath+=( "$HOME/.zfunc" )
 
 # Scroll with trackpad in less:
-export LESS=-r
+export LESS=-R
 
 export EDITOR=vim
 export VISUAL=vim
@@ -39,8 +41,20 @@ export VISUAL=vim
 # See: https://unix.stackexchange.com/a/197841
 bindkey -e
 
+# For demos, this is enough configuration to ensure a "default-ish" environment.
+if [ "$DEMO_ENVIRONMENT" -eq 1 ] ; then
+    autoload -Uz promptinit && promptinit
+    # for that authentic git bash experience:
+    #prompt gitbash MINGW64
+    prompt restore
+    alias gcc=gcc-13
+    source $HOME/.zprofile
+    export GIT_CONFIG_GLOBAL=/tmp/gitconfig
+    return
+fi
+
+
 source "$ZSHCONFIGDIR/init.zsh"
-source "$HOME/.aliases"
 
 # Configure what zle consisders a "word".
 #
@@ -71,7 +85,13 @@ HISTSIZE=20000
 SAVEHIST=10000
 setopt SHARE_HISTORY
 
-# Completion -- see: https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+# Completion
+#
+# See:
+#  - https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+#  - https://thevaluable.dev/zsh-completion-guide-examples/
+#  - man zshcompsys
+#
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored _correct _approximate
 zstyle ':completion:*' list-colors ''
@@ -79,6 +99,18 @@ zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character t
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' max-errors 2
 zstyle :compinstall filename '/Users/eddie/.zshrc'
-# End of lines added by compinstall
 autoload -Uz compinit
 compinit
+# End of lines added by compinstall
+
+# My aliases. Load this AFTER compinit because some aliases
+# invoke `compdef`
+source "$HOME/.aliases"
+
+# NO CLOBBER IS NECESSARY!
+set -o noclobber
+
+# TODO: look at this: http://micahelliott.com/posts/2016-01-16-how-to-structure-zshrc.html
+# TODO: import some of these: https://github.com/eddieantonio/dotfiles-general/blob/master/home/.aliases
+# TODO: read this: https://grml.org/zsh/zsh-lovers.html
+fpath=(~/Programming/gitbash-zsh-theme/functions $fpath)

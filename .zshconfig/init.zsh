@@ -28,6 +28,9 @@ bindkey '^Z' fancy-ctrl-z
 commit-to-history() {
       print -s ${(z)BUFFER}
       zle send-break
+      # The above command will always error out for some reason, and I don't
+      # like that, so, pretend that all is good:
+      true
 }
 zle -N commit-to-history
 bindkey "^h" commit-to-history # ctrl-h

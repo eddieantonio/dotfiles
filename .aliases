@@ -29,7 +29,7 @@ alias mkdir='mkdir -p'
 # ls the way I like it
 # Note: macOS only for now
 alias ls='ls -G'
-alias ll='ls -l'
+alias ll='ls -lh'
 alias la='ls -la'
 
 # my favourite git aliases
@@ -67,5 +67,20 @@ idot() {
       | convert -trim -bordercolor black -border 20 -transparent black - - \
       | imgcat
 }
+
+# Renders man pages as PDFs and opens them in Preview
+# Stolen from: https://github.com/ohmyzsh/ohmyzsh/blob/632ed413a9ce62747ded83d7736491b081be4b49/plugins/macos/macos.plugin.zsh#L226C1-L232C25
+function man-preview() {
+  local page
+  for page in "${(@f)"$(man -w $@)"}"; do
+    command mandoc -Tpdf $page | open -f -a Preview
+  done
+}
+
+# Completions for man-preview
+if [ -n "$ZSH_VERSION" ]; then
+  compdef _man man-preview
+fi
+
 
 # vim: set ft=zsh:
