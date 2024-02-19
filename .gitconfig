@@ -13,6 +13,13 @@
 	smudge = git-lfs smudge -- %f
 [alias]
 	stashp = stash show -p
+# See: https://jvns.ca/blog/2024/02/16/popular-git-config-options/
+[diff]
+	algorithm = histogram
+[branch]
+	sort = -committerdate
+[merge]
+	conflictstyle = zdiff3
 [include]
 	# User name and email should be in here:
 	path = "~/.gitconfig_local"
