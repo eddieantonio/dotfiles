@@ -4,8 +4,6 @@
 	rebase = false
 [commit]
 	verbose = true
-[core]
-	excludesfile = /Users/eddie/.gitignore_global
 [push]
 	autoSetupRemote = true
 [filter "lfs"]
