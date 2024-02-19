@@ -13,6 +13,7 @@
 # Sensitive data
 /.ssh/
 /.gnupg/
+/.gitconfig_local
 
 # macOS stuff:
 /Applications/
