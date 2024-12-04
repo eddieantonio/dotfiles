@@ -63,12 +63,16 @@ prompt_eddieantonio_lprompt() {
     local directory_color=32
     local success_color=74
     local error_color=124
+    local venv_color=243
 
     # ⚙        | Add a symbol when there's at least one background job.
     print -n '%(1j.%B⚙%b .)'
 
+    # (.venv)  | Show the activated virtualenv, if it exists
+    [[ -n "$VIRTUAL_ENV" ]] && print -n '%F{'$venv_color'}('"${VIRTUAL_ENV##*/}"')%f '
+
     # user@host | Show username@host if logged-in through SSH
-    [[ -n $SSH_CONNECTION ]] && print -n '%F{green}%n@%m%f '
+    [[ -n "$SSH_CONNECTION" ]] && print -n '%F{green}%n@%m%f '
 
     # ~         | current working dir, with ~ substitution
     print -n '%F{'$directory_color'}%1~%f'
