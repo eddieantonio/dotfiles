@@ -35,7 +35,7 @@ prompt_eddieantonio_setup () {
     autoload -Uz add-zsh-hook
     autoload -Uz git-info-psvar
 
-    PROMPT="$(prompt_eddieantonio_lprompt)"
+    PROMPT="$(prompt_eddieantonio_lprompt) "
     RPROMPT="$(prompt_eddieantonio_rprompt)"
 
     # Setup "git status in TouchBar" support (only in iTerm2)
@@ -62,6 +62,7 @@ prompt_eddieantonio_preview () {
 prompt_eddieantonio_lprompt() {
     local directory_color=32
     local success_color=74
+    local warning_color=202
     local error_color=124
     local venv_color=243
 
@@ -74,22 +75,26 @@ prompt_eddieantonio_lprompt() {
     # user@host | Show username@host if logged-in through SSH
     [[ -n "$SSH_CONNECTION" ]] && print -n '%F{green}%n@%m%f '
 
-    # ~         | current working dir, with ~ substitution
+    # ~         | Current working dir, with ~ substitution
     print -n '%F{'$directory_color'}%1~%f'
 
-    # 127       | sets the foreground colour depending on previous return
-    #           | code. Displays the return code if non-zero.
-    print -n '%(?.%F{'$success_color'}'
-    print -n '. %F{'$error_color'}%?)'
+    # 127       | Sets the foreground colour depending on previous return
+    #           | code. Always shows a warning colour if shell level >= 4.
+    #           | Always displays the return code if non-zero.
+    print -n '%(?.'
+    print -n    '%(4L.'
+    print -n      '%F{'$warning_color'}.'
+    print -n      '%F{'$success_color'}).'
+    print -n ' %F{'$error_color'}%?)'
 
-    # ❯❯        | outputs extra prompts, if in subshells (up to 3 levels).
-    print -n "%(2L.$pchar.)%(3L.$pchar.)"
+    # ❯❯        | Outputs extra prompts, if in subshells (up to 3 levels).
+    print -n "%(2L.❯.)%(3L.❯.)"
 
-    # ❯         | the final prompt character.
+    # ❯         | The final prompt character.
     print -n "❯"
 
-    #           | reset the foreground colour; add a space
-    print -n '%f '
+    #           | Reset the foreground colour; add a space
+    print -n '%f'
 }
 
 # Prints the format of the right prompt.
